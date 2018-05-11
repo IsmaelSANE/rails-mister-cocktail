@@ -1,35 +1,35 @@
 class CocktailsController < ApplicationController
-  include CocktailsHelper
-    def index         # GET /rcocktails
-     @cocktails = Cocktail.all
+  # GET /cocktails
+  def index
+    @cocktails = Cocktail.all
   end
 
-  def show          # GET /rcocktails/:id
+  # GET /cocktails/1
+  def show
     @cocktail = Cocktail.find(params[:id])
+    @dose = Dose.new
   end
 
-  def new           # GET /cocktails/new
+  # GET /cocktails/new
+  def new
     @cocktail = Cocktail.new
   end
 
-  def create        # POST /cocktails
+  # POST /cocktails
+  def create
     @cocktail = Cocktail.new(cocktail_params)
     if @cocktail.save
       redirect_to cocktail_path(@cocktail)
     else
       render :new
     end
-
   end
 
-  def edit          # GET /cocktails/:id/edit
-    @cocktail = Cocktail.find(params[:id])
-  end
+  private
 
-  def update        # PATCH /cocktails/:id
-  end
-
-  def destroy       # DELETE /cocktails/:id
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def cocktail_params
+    params.require(:cocktail).permit(:name)
   end
 
 end
